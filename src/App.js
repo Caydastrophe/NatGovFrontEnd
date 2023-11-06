@@ -1,24 +1,30 @@
-import logo from './logo.svg';
+import React from "react";
 import './App.css';
+import SignUp from "./components/signup/Signup";
+import Feed from "./components/feed/Feed";
+import { useState } from "react";
+
+const getPosts = (setPosts) => {
+  fetch("/api/bulletinBoards")
+  .then((response) => response.json())
+  .then((data) => setPosts(data.posts))
+  .catch((error) => console.log(error));
+}
 
 function App() {
+
+  const [posts, setPosts] = useState([]);
+  getPosts(setPosts);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div className="body">
+        <div className="App">
+          <SignUp />
+        </div>
+        <div className="Main">
+          <Feed post={posts} />
+        </div>
+      </div>
   );
 }
 
