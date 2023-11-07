@@ -1,0 +1,12 @@
+.post-img{
+    width: 100%;
+    height: 100%;
+}
+
+.post-like-btn{
+    display: inline-block;
+}
+
+.post-like{
+    display: flex;
+}
