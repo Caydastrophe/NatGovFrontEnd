@@ -55,9 +55,9 @@ const Posts = () => {
       <div>
         {posts.map((post) => (
           <div key={post.id}>
-            <img src={post.imgUrl} alt={post.caption} />
-            <h2>{post.caption}</h2>
-            <p>Likes: {post.likes}</p>
+            {/* <img src={post.imgUrl} alt={post.Title} /> */}
+            <h2>{post.Title}</h2>
+            <p>Details: {post.Details}</p>
             <button onClick={() => deletePost(post.id)}>Delete</button>
           </div>
         ))}
