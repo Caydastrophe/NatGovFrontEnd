@@ -1,0 +1,44 @@
+/* Signup.css */
+
+.signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    background-color: #054223; /* Background color, adjust as needed */
+}
+
+.form-container {
+    padding: 20px;
+    border-radius: 10px; /* Rounded edges */
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1); /* Box shadow for a slight depth effect */
+    background-color: #76A58B; /* Background color for the form */
+    max-width: 400px; /* Maximum width of the form */
+    width: 100%; /* Adjust width as needed */
+    box-sizing: border-box; /* For proper width calculation */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Spacing between form elements */
+}
+
+input {
+    padding: 10px;
+    border: 1px solid #ccc; /* Border color */
+    border-radius: 5px; /* Slightly rounded edges for inputs */
+}
+
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #E8B750; /* Adjust button color as needed */
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #E8B750; /* Button hover effect */
+}

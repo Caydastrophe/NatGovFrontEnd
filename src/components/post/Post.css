@@ -1,0 +1,27 @@
+/* Posts.css */
+
+.posts-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #054223;
+}
+
+.post {
+    background-color: #76A58B;
+    margin: 10px;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    width: 80%; /* Adjust the width as needed */
+    max-width: 600px; /* Maximum width */
+}
+
+.post h2 {
+    margin: 0 0 10px 0;
+}
+
+.post p {
+    margin: 0;
+}

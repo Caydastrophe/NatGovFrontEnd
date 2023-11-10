@@ -1,14 +1,15 @@
 import React, { useState, useContext } from 'react';
-import { AuthContext } from './AuthContext'; // Make sure you have created this context
+import { AuthContext , useAuth } from './AuthContext'; 
 import { useNavigate } from 'react-router-dom';
+import './Login.css'; 
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const { setAuthToken } = useContext(AuthContext); // Correctly get setAuthToken from context
-    const navigate = useNavigate(); // Call the useNavigate hook correctly
+    const navigate = useNavigate(); 
+    const { login } = useAuth();
 
-    const handleSubmit = async (event) => {
+    const handleLogin = async (event) => {
         event.preventDefault();
 
         try {
@@ -25,36 +26,46 @@ const Login = () => {
                 throw new Error(data.message || 'Something went wrong');
             }
 
-            setAuthToken(data.token); // Save the token in context or state
-            navigate('/posts'); // Redirect to posts page correctly
-
+            if (data.token) {
+                //console.log("Token:", data.token); 
+                //console.log("Username:", username); 
+                login(data.token, username); 
+                navigate('/homepage'); 
+            } else {
+                console.error("No token received");
+            }
         } catch (error) {
             console.error('Login error:', error);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label>Username:</label>
-                <input
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                />
+        <div className="login-container">
+            <div className="form-container">
+                <h1>Login</h1>
+                <form onSubmit={handleLogin}>
+                    <div>
+                        <label>Username:</label>
+                        <input
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label>Password:</label>
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <button type="submit">Login</button>
+                </form>
             </div>
-            <div>
-                <label>Password:</label>
-                <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-            </div>
-            <button type="submit">Login</button>
-        </form>
+        </div>
     );
 };
 

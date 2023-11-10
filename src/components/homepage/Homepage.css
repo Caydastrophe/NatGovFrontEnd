@@ -1,0 +1,36 @@
+
+.homepage-container {
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-wrapper {
+    margin-bottom: 2px;
+}
+
+.content-wrapper {
+    padding: 20px;
+}
+
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.create-post-modal {
+    background-color: #054223;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1001; 
+}
+

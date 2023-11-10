@@ -1,14 +1,9 @@
-// https://localhost:3002/api/posts
-
-// src/components/Posts.js
-
+import './Post.css';
 import React, { useEffect, useState } from 'react';
-
-const getToken = () => {
-  return localStorage.getItem('token');
-}
+import { useAuth } from '../login/AuthContext';
 
 const Posts = () => {
+  const {token , user} = useAuth();
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -16,7 +11,15 @@ const Posts = () => {
   }, []);
 
   const fetchPosts = () => {
-    fetch('https://localhost:3002/api/posts')
+    //console.log("Token:", token); 
+    fetch(`https://localhost:3002/api/posts`, {
+      method: 'GET',
+      // Include headers and authentication token if needed
+       headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+       }
+    })
       .then((response) => response.json())
       .then((data) => {
         setPosts(data.posts);
@@ -26,44 +29,39 @@ const Posts = () => {
       });
   };
 
-  const token = getToken()
   const deletePost = (postId) => {
+    //console.log("Token:", token); 
     fetch(`https://localhost:3002/api/posts/${postId}`, {
       method: 'DELETE',
-      // Include headers and authentication token if needed
-       headers: {
+      headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
-       }
-    })
-    .then((response) => {
-      if (response.ok) {
-        // Remove the post from the state
-        setPosts(posts.filter((post) => post.id !== postId));
-      } else {
-        throw new Error('Post could not be deleted');
       }
     })
-    .catch((error) => {
+    .then(response => {
+      if (response.ok) {
+        setPosts(posts.filter(post => post._id !== postId)); 
+      } else {
+        throw new Error('Failed to delete the post');
+      }
+    })
+    .catch(error => {
       console.error('Error:', error);
     });
   };
 
   return (
-    <div>
-      <h1>Posts</h1>
-      <div>
-        {posts.map((post) => (
-          <div key={post.id}>
-            {/* <img src={post.imgUrl} alt={post.Title} /> */}
-            <h2>{post.Title}</h2>
-            <p>Details: {post.Details}</p>
-            <button onClick={() => deletePost(post.id)}>Delete</button>
-          </div>
+    <div className="posts-container">
+        {posts.map(post => (
+            <div key={post._id} className="post">
+                <h2>{post.Title}</h2>
+                <p>{post.Details}</p>
+                <button onClick={() => deletePost(post._id)}>Delete Post</button>
+            </div>
         ))}
-      </div>
     </div>
-  );
+);
 };
+
 
 export default Posts;

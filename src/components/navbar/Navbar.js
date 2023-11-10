@@ -1,14 +1,25 @@
-// ./components/navbar/Navbar.js
-
 import React from 'react';
+import './Navbar.css';
+import { useAuth } from '../login/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
-const Navbar = ({ onLogout }) => {
-  return (
-    <nav style={{ display: 'flex', justifyContent: 'space-between', padding: '1rem', background: '#eee' }}>
-      <span>My React App</span>
-      <button onClick={onLogout}>Logout</button>
-    </nav>
-  );
+const Navbar = ({ onShowCreatePost }) => {
+    const navigate = useNavigate();
+    const { logout } = useAuth();
+
+    const handleLogout = () => {
+        logout();
+        localStorage.removeItem('token');
+        navigate('/login');
+    };
+
+    return (
+        <nav className='navbar'>
+            <span>National Government</span>
+            <button className="create-post-btn" onClick={onShowCreatePost}>Create Post</button>
+            <button onClick={handleLogout}>Logout</button>
+        </nav>
+    );
 };
 
 export default Navbar;
