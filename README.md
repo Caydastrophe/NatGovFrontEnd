@@ -1,3 +1,51 @@
+
+#README
+
+#NOTE
+I'm not finished with the project, there are still security features I want to add and polish out the ui.
+
+#The Setup
+Cloning the project from Git
+To pull code from a Git repository into Visual Studio using the terminal, you can follow these steps:
+
+1) Open the terminal and run: git clone <link>
+2) Install the dependancies
+   
+   --node modules
+   • npm install 
+   
+   --ssl certificate
+    open powerShell
+    • Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+    (close and re-open powershell)
+    •choco install mkcert
+    •mkcert localhost
+    •mkcert -install
+
+    Note: Replace {YOUR_CERTIFICATE_PATH} and {YOUR_KEY_PATH} with the your actual filepaths eg. C:\Windows\system32\localhost-key.pem.
+
+    --flow
+
+    • npm install --save flow-bin
+
+    • "flow": "flow"
+
+    • npm run flow init
+
+    • // @flow
+
+    -- react router dom
+
+    • npm i react-router-dom
+
+
+
+### The National Government's FrontEnd
+
+The purpose of the FrontEnd is to allow for secure sign in, and then allow government workers to view posts on the bulletin boards, as well as securely create and delete their own posts on the boards. The app makes use of SSL certificates to secure the connection, bcrypt to hash and store passwords, JSON web token's to persist log-in state and caters for CORS. The front end allows users to do this by interacting with the web interface.
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
