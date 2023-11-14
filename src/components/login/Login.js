@@ -2,12 +2,16 @@ import React, { useState, useContext } from 'react';
 import { AuthContext , useAuth } from './AuthContext'; 
 import { useNavigate } from 'react-router-dom';
 import './Login.css'; 
+import { useError } from '../error/ErrorContext';
+import { ErrorProvider } from '../error/ErrorContext';
+import ErrorMessage from '../error/ErrorMessage';
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate(); 
     const { login } = useAuth();
+    const { showError } = useError();
 
     const handleLogin = async (event) => {
         event.preventDefault();
@@ -23,7 +27,7 @@ const Login = () => {
 
             const data = await response.json();
             if (!response.ok) {
-                throw new Error(data.message || 'Something went wrong');
+                throw new Error(showError(data.message || 'Something went wrong' + data.message));
             }
 
             if (data.token) {
@@ -33,13 +37,17 @@ const Login = () => {
                 navigate('/homepage'); 
             } else {
                 console.error("No token received");
+                showError('An error occurred: ');
             }
         } catch (error) {
             console.error('Login error:', error);
+            showError('An error occurred: ' + error);
         }
     };
 
     return (
+        <ErrorProvider>
+        <ErrorMessage />
         <div className="login-container">
             <div className="form-container">
                 <h1>Login</h1>
@@ -66,6 +74,7 @@ const Login = () => {
                 </form>
             </div>
         </div>
+        </ErrorProvider>
     );
 };
 

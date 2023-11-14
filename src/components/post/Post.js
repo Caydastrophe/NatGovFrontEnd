@@ -1,10 +1,14 @@
 import './Post.css';
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../login/AuthContext';
+import { useError } from '../error/ErrorContext';
+import { ErrorProvider } from '../error/ErrorContext';
+import ErrorMessage from '../error/ErrorMessage';
 
 const Posts = () => {
   const {token , user} = useAuth();
   const [posts, setPosts] = useState([]);
+  const { showError } = useError();
 
   useEffect(() => {
     fetchPosts();
@@ -26,6 +30,7 @@ const Posts = () => {
       })
       .catch((error) => {
         console.error('Error:', error);
+        showError('An error occurred: ' + error.message);
       });
   };
 
@@ -42,11 +47,12 @@ const Posts = () => {
       if (response.ok) {
         setPosts(posts.filter(post => post._id !== postId)); 
       } else {
-        throw new Error('Failed to delete the post');
+        throw new Error(showError('Failed to delete the post'));
       }
     })
     .catch(error => {
       console.error('Error:', error);
+      showError('An error occurred: ' + error.message);
     });
   };
 

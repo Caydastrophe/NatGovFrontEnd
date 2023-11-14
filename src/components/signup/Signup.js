@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import './Signup.css';
+import { useError } from '../error/ErrorContext';
 
 const Signup = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const { showError } = useError();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -28,11 +30,12 @@ const Signup = () => {
             } else {
                 // If the server response wasn't okay, handle errors
                 const errorResult = await response.json();
-                console.error('Signup failed:', errorResult);
+                showError('An error occurred: ' + errorResult.message);
                 alert('Signup failed. Please try again later.');
             }
         } catch (error) {
             console.error('An error occurred:', error);
+            showError('An error occurred: ' + error);
             alert('An error occurred during signup. Please try again later.');
         }
     };

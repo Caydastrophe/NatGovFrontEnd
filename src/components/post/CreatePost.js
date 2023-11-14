@@ -1,10 +1,14 @@
 import React, { useState, useContext } from 'react';
 import { useAuth } from '../login/AuthContext';
+import { useError } from '../error/ErrorContext';
+import { ErrorProvider } from '../error/ErrorContext';
+import ErrorMessage from '../error/ErrorMessage';
 
 const CreatePost = ({ onPostCreated }) => {
     const [title, setTitle] = useState('');
     const [details, setDetails] = useState('');
     const { token, user } = useAuth();
+    const { showError } = useError();
 
 
     const handleSubmit = async (e) => {
@@ -26,7 +30,7 @@ const CreatePost = ({ onPostCreated }) => {
             }); 
             const data = await response.json();
             if (!response.ok) {
-                throw new Error(data.message || 'Something went wrong');
+                throw new Error(showError(data.message || 'Something went wrong'));
             }
 
             //onPostCreated(); // Callback to update the list of posts in the parent component
@@ -34,6 +38,7 @@ const CreatePost = ({ onPostCreated }) => {
             setDetails('');
         } catch (error) {
             console.error('Post creation error:', error);
+            showError('An error occurred: ' + error);
         }
     };
 
