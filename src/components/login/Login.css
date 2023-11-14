@@ -43,3 +43,9 @@ button:hover {
     background-color: #E8B750; 
 }
 
+.signup-button {
+    /* Styling for your sign-up button */
+    margin-top: 1rem; /* Example: Add some space above the button */
+    background-color: #4CAF50; /* Example: Different background color */
+    /* ...other styles... */
+}

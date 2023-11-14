@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import './Signup.css';
 import { useError } from '../error/ErrorContext';
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const { showError } = useError();
+    const navigate = useNavigate(); 
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -26,7 +28,7 @@ const Signup = () => {
                 const result = await response.json();
                 console.log(result);
                 alert('Signup successful!');
-                // Handle successful signup, like redirecting to a login page or home page
+                navigate('/homepage'); 
             } else {
                 // If the server response wasn't okay, handle errors
                 const errorResult = await response.json();
@@ -64,6 +66,9 @@ const Signup = () => {
                         />
                     </div>
                     <button type="submit">Sign Up</button>
+                    <button className="login-button" onClick={() => navigate('/login')}>
+                        Log in
+                    </button>
                 </form>
             </div>
         </div>
